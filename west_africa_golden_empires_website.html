@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>West Africa's Golden Empires | History, Gold & Oil</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#f7f2e8;--panel:rgba(255,255,255,.72);--panel-strong:#fffdf8;--card:#ffffff;--ink:#17221d;--gold:#d6a63b;--sand:#f4eddd;--green:#173f32;--green-2:#24533d;--muted:#68736c;--line:#e7dcc5;--shadow:0 18px 40px rgba(25,35,30,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Georgia,serif;color:var(--ink);background:radial-gradient(circle at top,#fffaf0 0%,#f3ebdf 30%,#f4f0ea 100%);line-height:1.7}
+.top-nav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:16px 7vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 18px rgba(23,36,28,.03)}
+.top-nav .logo{font:700 13px Arial;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
+.top-nav nav{display:flex;gap:22px;flex-wrap:wrap}
+.top-nav nav a{color:var(--green);font:700 13px Arial;text-decoration:none;display:inline-block;padding:6px 0;position:relative;transition:color .2s ease}
+.top-nav nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.top-nav nav a:hover{color:#1d4f3d}.top-nav nav a:hover::after{transform:scaleX(1)}
+header{background:linear-gradient(120deg,#102c24,#24533d 55%,#8b6828);color:white;padding:78px 7vw 62px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 15%,rgba(214,166,59,.28),transparent 30%);pointer-events:none}
+header .eyebrow{letter-spacing:3px;text-transform:uppercase;color:#f3d78e;font:600 12px Arial;position:relative;z-index:1}
+h1{font-size:clamp(2.3rem,6vw,5rem);line-height:1.04;max-width:850px;margin:18px 0;position:relative;z-index:1}
+header p{max-width:760px;font:18px/1.7 Arial;color:#e9eee8;position:relative;z-index:1}
+main{max-width:1200px;margin:auto;padding:38px 24px 70px}
+section{padding:30px 28px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);border-radius:28px;box-shadow:var(--shadow);scroll-margin-top:120px;margin-bottom:26px}
+h2{font-size:clamp(1.7rem,4vw,2.6rem);color:var(--green);line-height:1.15;margin:0 0 16px}
+h3{color:#805d1d;margin-bottom:8px}
+p,li{font-size:17px}.lead{font-size:19px;color:#48544d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:linear-gradient(180deg,#ffffff,#fdfaf2);border:1px solid #eddcb5;border-radius:18px;padding:22px;box-shadow:0 14px 28px rgba(48,52,48,.04);transition:transform .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 18px 32px rgba(48,52,48,.08)}
+.tag{display:inline-block;background:#f4e8c8;color:#70521a;padding:5px 10px;border-radius:22px;font:12px Arial;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+#map{height:520px;border-radius:16px;border:1px solid #d8cfbd;z-index:1}
+.map-panel{background:linear-gradient(180deg,#fffdf8,#f4efe1);border:1px solid #ddcfad;border-radius:22px;padding:16px;box-shadow:0 18px 40px rgba(26,40,32,.08);margin-top:18px;opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease,box-shadow .4s ease}
+.map-panel.revealed{opacity:1;transform:translateY(0)}
+.map-controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 18px}
+.map-toggle{background:#f7f0dc;color:var(--green);border:1px solid #d7c692;padding:10px 16px;border-radius:999px;font:700 12px Arial;cursor:pointer;transition:all .2s ease}
+.map-toggle.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 8px 18px rgba(23,63,50,.18)}
+.note{background:linear-gradient(135deg,#fff6d7,#fdf5e4);border-left:4px solid var(--gold);padding:16px 18px;border-radius:10px;color:#3d3d2c;box-shadow:inset 0 0 0 1px rgba(214,166,59,.12)}
+.legend{display:flex;gap:15px;flex-wrap:wrap;font:13px Arial;margin:12px 0;color:#3d4f49}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+button{background:linear-gradient(135deg,#173f32,#1f5643);color:white;border:0;padding:11px 17px;border-radius:10px;font-weight:bold;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+button:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(23,63,50,.18)}.like{background:linear-gradient(135deg,#9a7022,#b9892b)}
+textarea,input{width:100%;padding:12px;border:1px solid #cfc6b5;border-radius:10px;font:15px Arial;margin:6px 0 12px;background:rgba(255,255,255,.75)}
+textarea:focus,input:focus{outline:2px solid rgba(214,166,59,.3);border-color:#b5903d}
+.comment{padding:14px 0;border-bottom:1px solid #eee5d5}.comment strong{color:var(--green)}
+small,.muted{color:var(--muted);font:13px Arial}
+.page-slider-wrap{position:relative}.page-slider{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:8px 4px 14px;scrollbar-width:thin}.page-slider::-webkit-scrollbar{height:8px}.page-slider::-webkit-scrollbar-thumb{background:#d1b471;border-radius:999px}.page-card{display:block;min-width:230px;flex:0 0 230px;background:linear-gradient(180deg,#fffdf8,#f2ebda);border:1px solid #e4d4a8;border-radius:20px;padding:20px;text-decoration:none;color:var(--ink);box-shadow:0 16px 28px rgba(25,35,30,.06);scroll-snap-align:start;transition:transform .2s ease,box-shadow .2s ease}.page-card:hover{transform:translateY(-2px);box-shadow:0 18px 32px rgba(25,35,30,.10)}.page-card .card-tag{display:inline-block;font:700 11px Arial;letter-spacing:.12em;text-transform:uppercase;color:#7c5b1f;background:#f5e7bf;border-radius:999px;padding:6px 10px;margin-bottom:14px}.page-card h3{margin:0 0 8px;font-size:1.5rem}.page-card p{margin:0;color:#48544d;font-size:15px;line-height:1.6}.slider-controls{display:flex;justify-content:flex-end;gap:10px;margin-bottom:12px}.slider-trigger{width:42px;height:42px;border-radius:50%;padding:0;display:grid;place-items:center;font-size:1.1rem}
+footer{background:#102c24;color:#e7eee8;padding:28px 7vw;font:14px Arial;box-shadow:0 -8px 24px rgba(16,44,36,.12)}
+a{color:#87631f}
+@media(max-width:600px){header{padding:48px 22px}nav{gap:13px}#map{height:420px}section{padding:24px 20px}.page-card{min-width:200px;flex-basis:200px}}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="logo">West Africa</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="empires.html">Empires</a>
+    <a href="map.html">Map</a>
+    <a href="resources.html">Resources</a>
+    <a href="discussion.html">Discussion</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div>
+<header>
+<div class="eyebrow">An African history & resources project</div>
+<h1>West Africa’s Golden Empires</h1>
+<p>Ghana, Mali and Songhai: the people, cities and trade networks that shaped a region — and the modern question of where Africa’s gold and petroleum resources are found today.</p>
+</header>
+<main>
+<section id="intro"><span class="tag">History meets geology</span><h2>One region, many layers of history</h2>
+<p class="lead">The medieval Ghana, Mali and Songhai states flourished across the western Sahel. Their power was closely connected to trade — especially gold and salt — but they were not the same as the modern countries of Ghana or Mali. Today’s mineral and petroleum maps describe modern geology and exploration, not the borders or resource ownership of medieval kingdoms.</p>
+<div class="note"><strong>Important distinction:</strong> historical gold-trading zones do not prove that crude oil or gold lies beneath every part of an empire’s former territory. Deposits are identified through geological mapping, sampling, geophysics and drilling.</div>
+</section>
+<section id="all-pages">
+  <h2>Browse every page</h2>
+  <p class="lead">A quick slide showing every page in this project so you can move through the site in one glance.</p>
+  <div class="slider-controls">
+    <button class="slider-trigger" type="button" data-direction="prev" aria-label="Previous page">←</button>
+    <button class="slider-trigger" type="button" data-direction="next" aria-label="Next page">→</button>
+  </div>
+  <div class="page-slider-wrap">
+    <div class="page-slider" id="pageSlider">
+      <a class="page-card" href="index.html"><span class="card-tag">01</span><h3>Home</h3><p>Overview of the project, history, and main themes.</p></a>
+      <a class="page-card" href="empires.html"><span class="card-tag">02</span><h3>Empires</h3><p>Detailed story of Ghana, Mali, and Songhai.</p></a>
+      <a class="page-card" href="map.html"><span class="card-tag">03</span><h3>Map</h3><p>Interactive geographic view with empire and resource layers.</p></a>
+      <a class="page-card" href="resources.html"><span class="card-tag">04</span><h3>Resources</h3><p>Gold, oil, and the difference between historical trade and modern geology.</p></a>
+      <a class="page-card" href="discussion.html"><span class="card-tag">05</span><h3>Discussion</h3><p>Place for questions, ideas, and local community reflection.</p></a>
+      <a class="page-card" href="sources.html"><span class="card-tag">06</span><h3>Sources</h3><p>References and further reading for the project.</p></a>
+    </div>
+  </div>
+</section>
+<section id="empires"><h2>Discover the three empires</h2><div class="grid">
+<article class="card"><span class="tag">c. 6th–13th centuries</span><h3>Ghana Empire (Wagadu)</h3><p>Centred broadly in areas of present-day southeastern Mauritania and western Mali, Ghana grew wealthy by taxing trans-Saharan commerce. Gold from southern production zones and salt from the Sahara moved through its trading network. Its capital is commonly associated with the Kumbi Saleh area.</p></article>
+<article class="card"><span class="tag">c. 13th–16th centuries</span><h3>Mali Empire</h3><p>Founded under Sundiata Keita in the 13th century, Mali expanded across much of the western Sahel. Under Mansa Musa, its wealth and links to wider Islamic and commercial networks became famous. Timbuktu, Djenné and Niani are among the important places associated with its history.</p></article>
+<article class="card"><span class="tag">c. 15th–16th centuries</span><h3>Songhai Empire</h3><p>Songhai rose around Gao and reached its height under Askia Muhammad. It controlled major Niger River cities and trade routes. Agriculture in the Niger floodplain, taxation and commerce in gold and salt supported its economy. Moroccan forces defeated Songhai at Tondibi in 1591.</p></article>
+</div><p class="muted">Dates and territorial limits are approximate; historical boundaries shifted over time and are reconstructed from written sources, oral traditions and archaeology.</p></section>
+<section id="map-section"><h2>Explore the map</h2><p>Switch between approximate historical zones and selected modern resource locations. Select a marker for a short explanation. Historical outlines are illustrative, not surveyed borders.</p>
+<div class="map-controls">
+<button class="map-toggle active" data-layer="ghana">Reveal Ghana Empire</button>
+<button class="map-toggle active" data-layer="mali">Reveal Mali Empire</button>
+<button class="map-toggle active" data-layer="songhai">Reveal Songhai Empire</button>
+<button class="map-toggle active" data-layer="resources">Reveal Gold & Oil Potential</button>
+</div>
+<div class="legend"><span><i class="dot" style="background:#c69a35"></i>Ghana Empire (approx.)</span><span><i class="dot" style="background:#3b8b69"></i>Mali Empire (approx.)</span><span><i class="dot" style="background:#577eb5"></i>Songhai Empire (approx.)</span><span>🟡 Gold locations</span><span>🛢️ Petroleum locations</span></div>
+<div class="map-panel reveal-target"><div id="map"></div></div>
+</section>
+<section id="resources"><h2>Gold and crude oil in present-day Africa</h2><div class="grid">
+<div class="card"><h3>Gold: established producers</h3><p>West Africa contains major gold-producing belts. Ghana, Mali and Burkina Faso are important modern gold producers. Gold deposits also occur in South Africa, Tanzania, Sudan and other countries. The location and size of each deposit depend on local geology.</p></div>
+<div class="card"><h3>Crude oil: major producing regions</h3><p>African petroleum production is associated with sedimentary basins, including the Niger Delta and offshore Gulf of Guinea, as well as North African basins and parts of Central and Southern Africa. Nigeria, Libya, Algeria, Angola, Egypt, Gabon and other states have petroleum industries.</p></div>
+<div class="card"><h3>Could more be discovered?</h3><p>Yes. Underexplored basins and mineral belts may contain undiscovered resources. But a geological possibility is not a discovery: exploration results, commercial viability, environmental safeguards and community consent all matter.</p></div>
+</div>
+<div class="note"><strong>Do not confuse the resources:</strong> gold is commonly associated with particular ancient and modern mineralised rock systems; oil and gas generally accumulate in sedimentary basins. A gold-rich region is not automatically oil-rich.</div>
+</section>
+<section id="discussion"><h2>Join the discussion</h2><p>What should African countries do to ensure natural-resource wealth benefits local communities and future generations?</p>
+<button class="like" id="likeBtn">♥ Like this project <span id="likeCount">0</span></button>
+<p class="muted">Demo interaction: likes and comments are saved only in this browser. To collect responses from everyone online, the site must be connected to a shared database and deployed with a public URL.</p>
+<h3>Leave a comment</h3><label for="name">Your name</label><input id="name" maxlength="40" placeholder="Enter your name"><label for="commentText">Your comment</label><textarea id="commentText" rows="4" maxlength="1000" placeholder="Share your thoughts..."></textarea><button id="postBtn">Post comment</button><div id="comments"></div>
+</section>
+<section id="sources"><h2>Sources & further reading</h2><ul>
+<li><a href="https://openstax.org/books/world-history-volume-1/pages/15-2-medieval-sub-saharan-africa" target="_blank" rel="noopener">OpenStax — Medieval Sub-Saharan Africa</a></li>
+<li><a href="https://openstax.org/books/world-history-volume-2/pages/3-2-the-songhai-empire" target="_blank" rel="noopener">OpenStax — The Songhai Empire</a></li>
+<li><a href="https://www.metmuseum.org/es/essays/the-trans-saharan-gold-trade-7th-14th-century" target="_blank" rel="noopener">The Metropolitan Museum of Art — The Trans-Saharan Gold Trade</a></li>
+<li><a href="https://www.bu.edu/africa/outreach/teachingresources/history/ancient-to-medieval-history/goldroad/" target="_blank" rel="noopener">Boston University / Howard University — The Gold Road Interactive Map</a></li>
+<li><a href="https://www.usgs.gov/publications/maps-showing-geology-oil-and-gas-fields-and-geological-provinces-africa" target="_blank" rel="noopener">U.S. Geological Survey — African geology, oil and gas map</a></li>
+<li><a href="https://www.usgs.gov/data/compilation-geospatial-data-gis-mineral-industries-and-related-infrastructure-africa" target="_blank" rel="noopener">U.S. Geological Survey — Africa mineral-industry geospatial data</a></li>
+<li><a href="https://egps.worldbank.org/sites/default/files/2025-10/WB_Mineral%20Resources%20of%20Africa_WEB.pdf" target="_blank" rel="noopener">World Bank — Mineral Resources of Africa</a></li>
+</ul></section>
+</main>
+<footer><strong>West Africa’s Golden Empires</strong><br>Educational project • Historical boundaries and resource locations are simplified for learning.</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.querySelectorAll('.top-nav nav a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function (event) {
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    event.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+const revealTarget=document.querySelector('.reveal-target');
+const revealObserver=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}});},{threshold:0.2});
+if(revealTarget){revealObserver.observe(revealTarget);}
+const pageSlider=document.getElementById('pageSlider');
+document.querySelectorAll('.slider-trigger').forEach((button)=>{
+  button.addEventListener('click',()=>{
+    const direction=button.dataset.direction === 'next' ? 1 : -1;
+    const amount = pageSlider.clientWidth * 0.7;
+    pageSlider.scrollBy({ left: amount * direction, behavior: 'smooth' });
+  });
+});
+const map=L.map('map').setView([13.5,-3.5],4);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const empireLayers={
+  ghana:L.polygon([[16.5,-11.8],[16.8,-7.2],[14.8,-4.5],[12.4,-6.0],[12.5,-10.5],[14.2,-12.0]],{color:'#c69a35',weight:2,fillColor:'#c69a35',fillOpacity:.18}).bindPopup('<b>Ghana Empire — approximate core</b><br>Approximate reconstruction; not an exact political boundary.<br><br>Geological possibility: gold-bearing mineral belts and adjacent trade corridors in the wider region suggest strong potential for mineral prospectivity.'),
+  mali:L.polygon([[18.5,-16.5],[20,-8],[18.5,1],[15,4],[10,-1],[8,-7],[10,-12],[13,-16]],{color:'#3b8b69',weight:2,fillColor:'#3b8b69',fillOpacity:.18}).bindPopup('<b>Mali Empire — illustrative broad extent</b><br>Approximate historical area.<br><br>Geological possibility: modern gold discoveries in western Mali and nearby basins show how long-lived mineral systems can be linked to historic trade networks.'),
+  songhai:L.polygon([[20,-5],[22,2],[18,8],[14,5],[12,1],[14,-3],[17,-5]],{color:'#577eb5',weight:2,fillColor:'#577eb5',fillOpacity:.18}).bindPopup('<b>Songhai Empire — illustrative broad extent</b><br>Approximate historical area.<br><br>Geological possibility: the Niger basin and surrounding sedimentary systems suggest resource potential, though exploration must confirm actual oil or gas accumulations.')
+};
+Object.values(empireLayers).forEach(layer=>layer.addTo(map));
+const resourcePoints=[
+[13.45,-2.05,'🟡 Gold — Burkina Faso','Burkina Faso has significant gold mining and exploration activity.'],
+[7.95,-1.03,'🟡 Gold — Ghana','Ghana is a major modern gold producer.'],
+[17.0,-3.0,'🟡 Gold — Mali','Mali hosts important gold deposits and mines.'],
+[-1.5,29.2,'🟡 Gold — Tanzania','Tanzania has major gold mining districts.'],
+[5.4,6.5,'🛢️ Petroleum — Niger Delta, Nigeria','A major petroleum-producing region, including extensive onshore and offshore fields.'],
+[-5.2,12.0,'🛢️ Petroleum — Angola','Angola has major offshore petroleum production.'],
+[28.0,18.0,'🛢️ Petroleum — Libya','Libya has large oil-producing sedimentary basins.'],
+[31.0,30.0,'🛢️ Petroleum — Egypt','Egypt produces oil and natural gas from several basins.'],
+[0.2,9.5,'🛢️ Petroleum — Gabon','Gabon has onshore and offshore petroleum fields.']
+];
+const resourceMarkers=[];
+resourcePoints.forEach(([lat,lon,title,desc])=>{const marker=L.marker([lat,lon]).bindPopup('<b>'+title+'</b><br>'+desc);resourceMarkers.push(marker);marker.addTo(map);});
+L.marker([18.4,-4.5]).addTo(map).bindPopup('<b>Timbuktu</b><br>Important centre of learning and trade in the Mali and Songhai eras.');
+L.marker([16.27,-0.05]).addTo(map).bindPopup('<b>Gao</b><br>A major political and commercial centre of Songhai.');
+L.marker([12.64,-8.0]).addTo(map).bindPopup('<b>Niani region</b><br>Traditionally associated with the Mali Empire’s early history.');
+const toggleButtons=document.querySelectorAll('.map-toggle');
+const empireKeys=['ghana','mali','songhai'];
+const resourceLayerKey='resources';
+const applyEmpireToggle=(key,visible)=>{
+  const layer=empireLayers[key];
+  if(!layer) return;
+  layer.setStyle({fillOpacity:visible?0.18:0,opacity:visible?1:0,weight:visible?2:0});
+};
+toggleButtons.forEach(button=>{
+  button.addEventListener('click',()=>{
+    const layer=button.dataset.layer;
+    const visible=button.classList.toggle('active');
+    if(empireKeys.includes(layer)){
+      applyEmpireToggle(layer, visible);
+    }
+    if(layer===resourceLayerKey){
+      resourceMarkers.forEach(marker=>visible ? map.addLayer(marker) : map.removeLayer(marker));
+    }
+  });
+});
+const key='westAfricaEmpireComments',likeKey='westAfricaEmpireLikes';
+let likes=Number(localStorage.getItem(likeKey)||0);document.getElementById('likeCount').textContent=likes;
+document.getElementById('likeBtn').onclick=()=>{likes++;localStorage.setItem(likeKey,likes);document.getElementById('likeCount').textContent=likes};
+function render(){let arr=JSON.parse(localStorage.getItem(key)||'[]');document.getElementById('comments').innerHTML=arr.map(x=>'<div class="comment"><strong>'+escapeHtml(x.name)+'</strong><br>'+escapeHtml(x.text)+'<br><small>'+x.date+'</small></div>').join('')||'<p class="muted">No comments yet. Be the first to contribute.</p>'}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.getElementById('postBtn').onclick=()=>{let name=document.getElementById('name').value.trim(),txt=document.getElementById('commentText').value.trim();if(!name||!txt){alert('Please enter your name and a comment.');return}let arr=JSON.parse(localStorage.getItem(key)||'[]');arr.unshift({name,text:txt,date:new Date().toLocaleString()});localStorage.setItem(key,JSON.stringify(arr));document.getElementById('commentText').value='';render()};render();
+</script>
+</body></html>

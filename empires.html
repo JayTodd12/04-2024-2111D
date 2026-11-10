@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empires | West Africa's Golden Empires</title>
+<style>
+:root{--bg:#f7f2e8;--panel:rgba(255,255,255,.72);--card:#ffffff;--ink:#17221d;--gold:#d6a63b;--sand:#f4eddd;--green:#173f32;--muted:#68736c;--line:#e7dcc5;--shadow:0 18px 40px rgba(25,35,30,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Georgia,serif;color:var(--ink);background:radial-gradient(circle at top,#fffaf0 0%,#f3ebdf 30%,#f4f0ea 100%);line-height:1.7}
+.top-nav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:16px 7vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 18px rgba(23,36,28,.03)}
+.top-nav .logo{font:700 13px Arial;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
+.top-nav nav{display:flex;gap:22px;flex-wrap:wrap}
+.top-nav nav a{color:var(--green);font:700 13px Arial;text-decoration:none;display:inline-block;padding:6px 0;position:relative;transition:color .2s ease}
+.top-nav nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.top-nav nav a:hover{color:#1d4f3d}.top-nav nav a:hover::after{transform:scaleX(1)}
+header{background:linear-gradient(120deg,#102c24,#24533d 55%,#8b6828);color:white;padding:78px 7vw 62px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 15%,rgba(214,166,59,.28),transparent 30%);pointer-events:none}
+header .eyebrow{letter-spacing:3px;text-transform:uppercase;color:#f3d78e;font:600 12px Arial;position:relative;z-index:1}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.06;max-width:850px;margin:18px 0;position:relative;z-index:1}
+header p{max-width:760px;font:18px/1.7 Arial;color:#e9eee8;position:relative;z-index:1}
+main{max-width:1200px;margin:auto;padding:38px 24px 70px}
+section{padding:30px 28px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);border-radius:28px;box-shadow:var(--shadow);scroll-margin-top:120px;margin-bottom:26px}
+h2{font-size:clamp(1.7rem,4vw,2.6rem);color:var(--green);line-height:1.15;margin:0 0 16px}
+h3{color:#805d1d;margin-bottom:8px}
+p,li{font-size:17px}.lead{font-size:19px;color:#48544d}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}.card{background:linear-gradient(180deg,#ffffff,#fdfaf2);border:1px solid #eddcb5;border-radius:18px;padding:22px;box-shadow:0 14px 28px rgba(48,52,48,.04);transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-2px);box-shadow:0 18px 32px rgba(48,52,48,.08)}.tag{display:inline-block;background:#f4e8c8;color:#70521a;padding:5px 10px;border-radius:22px;font:12px Arial;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}.muted{color:var(--muted);font:13px Arial}footer{background:#102c24;color:#e7eee8;padding:28px 7vw;font:14px Arial;box-shadow:0 -8px 24px rgba(16,44,36,.12)}
+@media(max-width:600px){header{padding:48px 22px}nav{gap:13px}section{padding:24px 20px}}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="logo">West Africa</div>
+  <nav>
+    <a href="west_africa_golden_empires_website.html">Home</a>
+    <a href="empires.html">Empires</a>
+    <a href="map.html">Map</a>
+    <a href="resources.html">Resources</a>
+    <a href="discussion.html">Discussion</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div>
+<header>
+  <div class="eyebrow">History and memory</div>
+  <h1>The Three Great Empires</h1>
+  <p>Ghana, Mali and Songhai were not just states on a map — they were networks of cities, caravans, courts, teachings and trade.</p>
+</header>
+<main>
+  <section id="empires">
+    <h2>Discover the three empires</h2>
+    <div class="grid">
+      <article class="card"><span class="tag">c. 6th–13th centuries</span><h3>Ghana Empire (Wagadu)</h3><p>Centred broadly in areas of present-day southeastern Mauritania and western Mali, Ghana grew wealthy by taxing trans-Saharan commerce. Gold from southern production zones and salt from the Sahara moved through its trading network. Its capital is commonly associated with the Kumbi Saleh area.</p></article>
+      <article class="card"><span class="tag">c. 13th–16th centuries</span><h3>Mali Empire</h3><p>Founded under Sundiata Keita in the 13th century, Mali expanded across much of the western Sahel. Under Mansa Musa, its wealth and links to wider Islamic and commercial networks became famous. Timbuktu, Djenné and Niani are among the important places associated with its history.</p></article>
+      <article class="card"><span class="tag">c. 15th–16th centuries</span><h3>Songhai Empire</h3><p>Songhai rose around Gao and reached its height under Askia Muhammad. It controlled major Niger River cities and trade routes. Agriculture in the Niger floodplain, taxation and commerce in gold and salt supported its economy. Moroccan forces defeated Songhai at Tondibi in 1591.</p></article>
+    </div>
+    <p class="muted">Dates and territorial limits are approximate; historical boundaries shifted over time and are reconstructed from written sources, oral traditions and archaeology.</p>
+  </section>
+</main>
+<footer><strong>West Africa’s Golden Empires</strong><br>Educational project • Historical boundaries and resource locations are simplified for learning.</footer>
+</body>
+</html>

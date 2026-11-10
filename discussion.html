@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discussion | West Africa's Golden Empires</title>
+<style>
+:root{--bg:#f7f2e8;--panel:rgba(255,255,255,.72);--card:#ffffff;--ink:#17221d;--gold:#d6a63b;--sand:#f4eddd;--green:#173f32;--muted:#68736c;--line:#e7dcc5;--shadow:0 18px 40px rgba(25,35,30,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Georgia,serif;color:var(--ink);background:radial-gradient(circle at top,#fffaf0 0%,#f3ebdf 30%,#f4f0ea 100%);line-height:1.7}
+.top-nav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:16px 7vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 18px rgba(23,36,28,.03)}
+.top-nav .logo{font:700 13px Arial;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
+.top-nav nav{display:flex;gap:22px;flex-wrap:wrap}
+.top-nav nav a{color:var(--green);font:700 13px Arial;text-decoration:none;display:inline-block;padding:6px 0;position:relative;transition:color .2s ease}
+.top-nav nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.top-nav nav a:hover{color:#1d4f3d}.top-nav nav a:hover::after{transform:scaleX(1)}
+header{background:linear-gradient(120deg,#102c24,#24533d 55%,#8b6828);color:white;padding:78px 7vw 62px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 15%,rgba(214,166,59,.28),transparent 30%);pointer-events:none}
+header .eyebrow{letter-spacing:3px;text-transform:uppercase;color:#f3d78e;font:600 12px Arial;position:relative;z-index:1}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.06;max-width:850px;margin:18px 0;position:relative;z-index:1}
+header p{max-width:760px;font:18px/1.7 Arial;color:#e9eee8;position:relative;z-index:1}
+main{max-width:1200px;margin:auto;padding:38px 24px 70px}
+section{padding:30px 28px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);border-radius:28px;box-shadow:var(--shadow);scroll-margin-top:120px;margin-bottom:26px}
+h2{font-size:clamp(1.7rem,4vw,2.6rem);color:var(--green);line-height:1.15;margin:0 0 16px}
+h3{color:#805d1d;margin-bottom:8px}
+p,li{font-size:17px}.muted{color:var(--muted);font:13px Arial}
+button{background:linear-gradient(135deg,#173f32,#1f5643);color:white;border:0;padding:11px 17px;border-radius:10px;font-weight:bold;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+button:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(23,63,50,.18)}.like{background:linear-gradient(135deg,#9a7022,#b9892b)}
+textarea,input{width:100%;padding:12px;border:1px solid #cfc6b5;border-radius:10px;font:15px Arial;margin:6px 0 12px;background:rgba(255,255,255,.75)}
+textarea:focus,input:focus{outline:2px solid rgba(214,166,59,.3);border-color:#b5903d}
+.comment{padding:14px 0;border-bottom:1px solid #eee5d5}.comment strong{color:var(--green)}
+footer{background:#102c24;color:#e7eee8;padding:28px 7vw;font:14px Arial;box-shadow:0 -8px 24px rgba(16,44,36,.12)}
+@media(max-width:600px){header{padding:48px 22px}nav{gap:13px}section{padding:24px 20px}}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="logo">West Africa</div>
+  <nav>
+    <a href="west_africa_golden_empires_website.html">Home</a>
+    <a href="empires.html">Empires</a>
+    <a href="map.html">Map</a>
+    <a href="resources.html">Resources</a>
+    <a href="discussion.html">Discussion</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div>
+<header>
+  <div class="eyebrow">Community discussion</div>
+  <h1>Join the conversation</h1>
+  <p>What should African countries do to ensure natural-resource wealth benefits local communities and future generations?</p>
+</header>
+<main>
+  <section id="discussion">
+    <button class="like" id="likeBtn">♥ Like this project <span id="likeCount">0</span></button>
+    <p class="muted">Demo interaction: likes and comments are saved only in this browser. To collect responses from everyone online, the site must be connected to a shared database and deployed with a public URL.</p>
+    <h3>Leave a comment</h3>
+    <label for="name">Your name</label>
+    <input id="name" maxlength="40" placeholder="Enter your name">
+    <label for="commentText">Your comment</label>
+    <textarea id="commentText" rows="4" maxlength="1000" placeholder="Share your thoughts..."></textarea>
+    <button id="postBtn">Post comment</button>
+    <div id="comments"></div>
+  </section>
+</main>
+<footer><strong>West Africa’s Golden Empires</strong><br>Educational project • Historical boundaries and resource locations are simplified for learning.</footer>
+<script>
+const key='westAfricaEmpireComments',likeKey='westAfricaEmpireLikes';
+let likes=Number(localStorage.getItem(likeKey)||0);
+document.getElementById('likeCount').textContent=likes;
+document.getElementById('likeBtn').onclick=()=>{likes++;localStorage.setItem(likeKey,likes);document.getElementById('likeCount').textContent=likes};
+function render(){let arr=JSON.parse(localStorage.getItem(key)||'[]');document.getElementById('comments').innerHTML=arr.map(x=>'<div class="comment"><strong>'+escapeHtml(x.name)+'</strong><br>'+escapeHtml(x.text)+'<br><small>'+x.date+'</small></div>').join('')||'<p class="muted">No comments yet. Be the first to contribute.</p>'}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.getElementById('postBtn').onclick=()=>{let name=document.getElementById('name').value.trim(),txt=document.getElementById('commentText').value.trim();if(!name||!txt){alert('Please enter your name and a comment.');return}let arr=JSON.parse(localStorage.getItem(key)||'[]');arr.unshift({name,text:txt,date:new Date().toLocaleString()});localStorage.setItem(key,JSON.stringify(arr));document.getElementById('commentText').value='';render()};render();
+</script>
+</body>
+</html>

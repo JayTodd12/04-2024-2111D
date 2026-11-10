@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Map | West Africa's Golden Empires</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#f7f2e8;--panel:rgba(255,255,255,.72);--card:#ffffff;--ink:#17221d;--gold:#d6a63b;--sand:#f4eddd;--green:#173f32;--muted:#68736c;--line:#e7dcc5;--shadow:0 18px 40px rgba(25,35,30,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Georgia,serif;color:var(--ink);background:radial-gradient(circle at top,#fffaf0 0%,#f3ebdf 30%,#f4f0ea 100%);line-height:1.7}
+.top-nav{position:sticky;top:0;z-index:1000;background:rgba(255,253,248,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:16px 7vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 18px rgba(23,36,28,.03)}
+.top-nav .logo{font:700 13px Arial;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
+.top-nav nav{display:flex;gap:22px;flex-wrap:wrap}
+.top-nav nav a{color:var(--green);font:700 13px Arial;text-decoration:none;display:inline-block;padding:6px 0;position:relative;transition:color .2s ease}
+.top-nav nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.top-nav nav a:hover{color:#1d4f3d}.top-nav nav a:hover::after{transform:scaleX(1)}
+header{background:linear-gradient(120deg,#102c24,#24533d 55%,#8b6828);color:white;padding:78px 7vw 62px;position:relative;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 15%,rgba(214,166,59,.28),transparent 30%);pointer-events:none}
+header .eyebrow{letter-spacing:3px;text-transform:uppercase;color:#f3d78e;font:600 12px Arial;position:relative;z-index:1}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.06;max-width:850px;margin:18px 0;position:relative;z-index:1}
+header p{max-width:760px;font:18px/1.7 Arial;color:#e9eee8;position:relative;z-index:1}
+main{max-width:1200px;margin:auto;padding:38px 24px 70px}
+section{padding:30px 28px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);border-radius:28px;box-shadow:var(--shadow);scroll-margin-top:120px;margin-bottom:26px}
+h2{font-size:clamp(1.7rem,4vw,2.6rem);color:var(--green);line-height:1.15;margin:0 0 16px}
+p,li{font-size:17px}.note{background:linear-gradient(135deg,#fff6d7,#fdf5e4);border-left:4px solid var(--gold);padding:16px 18px;border-radius:10px;color:#3d3d2c;box-shadow:inset 0 0 0 1px rgba(214,166,59,.12)}
+.map-panel{background:linear-gradient(180deg,#fffdf8,#f4efe1);border:1px solid #ddcfad;border-radius:22px;padding:16px;box-shadow:0 18px 40px rgba(26,40,32,.08);margin-top:18px}
+.map-controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 18px}
+.map-toggle{background:#f7f0dc;color:var(--green);border:1px solid #d7c692;padding:10px 16px;border-radius:999px;font:700 12px Arial;cursor:pointer;transition:all .2s ease}
+.map-toggle.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 8px 18px rgba(23,63,50,.18)}
+.legend{display:flex;gap:15px;flex-wrap:wrap;font:13px Arial;margin:12px 0;color:#3d4f49}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+#map{height:520px;border-radius:16px;border:1px solid #d8cfbd;z-index:1}
+footer{background:#102c24;color:#e7eee8;padding:28px 7vw;font:14px Arial;box-shadow:0 -8px 24px rgba(16,44,36,.12)}
+@media(max-width:600px){header{padding:48px 22px}nav{gap:13px}#map{height:420px}section{padding:24px 20px}}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="logo">West Africa</div>
+  <nav>
+    <a href="west_africa_golden_empires_website.html">Home</a>
+    <a href="empires.html">Empires</a>
+    <a href="map.html">Map</a>
+    <a href="resources.html">Resources</a>
+    <a href="discussion.html">Discussion</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div>
+<header>
+  <div class="eyebrow">Geography and trade</div>
+  <h1>Map of the region</h1>
+  <p>Historical outlines are illustrative and should be read as approximate reconstructions rather than formal modern borders.</p>
+</header>
+<main>
+  <section id="map-section">
+    <h2>Explore the map</h2>
+    <p>Switch between approximate historical zones and selected modern resource locations. Select a marker for a short explanation. Historical outlines are illustrative, not surveyed borders.</p>
+    <div class="map-controls">
+      <button class="map-toggle active" data-layer="ghana">Reveal Ghana Empire</button>
+      <button class="map-toggle active" data-layer="mali">Reveal Mali Empire</button>
+      <button class="map-toggle active" data-layer="songhai">Reveal Songhai Empire</button>
+      <button class="map-toggle active" data-layer="resources">Reveal Gold & Oil Potential</button>
+    </div>
+    <div class="legend"><span><i class="dot" style="background:#c69a35"></i>Ghana Empire (approx.)</span><span><i class="dot" style="background:#3b8b69"></i>Mali Empire (approx.)</span><span><i class="dot" style="background:#577eb5"></i>Songhai Empire (approx.)</span><span>🟡 Gold locations</span><span>🛢️ Petroleum locations</span></div>
+    <div class="map-panel"><div id="map"></div></div>
+  </section>
+</main>
+<footer><strong>West Africa’s Golden Empires</strong><br>Educational project • Historical boundaries and resource locations are simplified for learning.</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map').setView([13.5,-3.5],4);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const empireLayers={
+  ghana:L.polygon([[16.5,-11.8],[16.8,-7.2],[14.8,-4.5],[12.4,-6.0],[12.5,-10.5],[14.2,-12.0]],{color:'#c69a35',weight:2,fillColor:'#c69a35',fillOpacity:.18}).bindPopup('<b>Ghana Empire — approximate core</b><br>Approximate reconstruction; not an exact political boundary.<br><br>Geological possibility: gold-bearing mineral belts and adjacent trade corridors in the wider region suggest strong potential for mineral prospectivity.'),
+  mali:L.polygon([[18.5,-16.5],[20,-8],[18.5,1],[15,4],[10,-1],[8,-7],[10,-12],[13,-16]],{color:'#3b8b69',weight:2,fillColor:'#3b8b69',fillOpacity:.18}).bindPopup('<b>Mali Empire — illustrative broad extent</b><br>Approximate historical area.<br><br>Geological possibility: modern gold discoveries in western Mali and nearby basins show how long-lived mineral systems can be linked to historic trade networks.'),
+  songhai:L.polygon([[20,-5],[22,2],[18,8],[14,5],[12,1],[14,-3],[17,-5]],{color:'#577eb5',weight:2,fillColor:'#577eb5',fillOpacity:.18}).bindPopup('<b>Songhai Empire — illustrative broad extent</b><br>Approximate historical area.<br><br>Geological possibility: the Niger basin and surrounding sedimentary systems suggest resource potential, though exploration must confirm actual oil or gas accumulations.')
+};
+Object.values(empireLayers).forEach(layer=>layer.addTo(map));
+const resourcePoints=[
+[13.45,-2.05,'🟡 Gold — Burkina Faso','Burkina Faso has significant gold mining and exploration activity.'],
+[7.95,-1.03,'🟡 Gold — Ghana','Ghana is a major modern gold producer.'],
+[17.0,-3.0,'🟡 Gold — Mali','Mali hosts important gold deposits and mines.'],
+[-1.5,29.2,'🟡 Gold — Tanzania','Tanzania has major gold mining districts.'],
+[5.4,6.5,'🛢️ Petroleum — Niger Delta, Nigeria','A major petroleum-producing region, including extensive onshore and offshore fields.'],
+[-5.2,12.0,'🛢️ Petroleum — Angola','Angola has major offshore petroleum production.'],
+[28.0,18.0,'🛢️ Petroleum — Libya','Libya has large oil-producing sedimentary basins.'],
+[31.0,30.0,'🛢️ Petroleum — Egypt','Egypt produces oil and natural gas from several basins.'],
+[0.2,9.5,'🛢️ Petroleum — Gabon','Gabon has onshore and offshore petroleum fields.']
+];
+const resourceMarkers=[];
+resourcePoints.forEach(([lat,lon,title,desc])=>{const marker=L.marker([lat,lon]).bindPopup('<b>'+title+'</b><br>'+desc);resourceMarkers.push(marker);marker.addTo(map);});
+L.marker([18.4,-4.5]).addTo(map).bindPopup('<b>Timbuktu</b><br>Important centre of learning and trade in the Mali and Songhai eras.');
+L.marker([16.27,-0.05]).addTo(map).bindPopup('<b>Gao</b><br>A major political and commercial centre of Songhai.');
+L.marker([12.64,-8.0]).addTo(map).bindPopup('<b>Niani region</b><br>Traditionally associated with the Mali Empire’s early history.');
+const toggleButtons=document.querySelectorAll('.map-toggle');
+const empireKeys=['ghana','mali','songhai'];
+const resourceLayerKey='resources';
+const applyEmpireToggle=(key,visible)=>{
+  const layer=empireLayers[key];
+  if(!layer) return;
+  layer.setStyle({fillOpacity:visible?0.18:0,opacity:visible?1:0,weight:visible?2:0});
+};
+toggleButtons.forEach(button=>{
+  button.addEventListener('click',()=>{
+    const layer=button.dataset.layer;
+    const visible=button.classList.toggle('active');
+    if(empireKeys.includes(layer)){
+      applyEmpireToggle(layer, visible);
+    }
+    if(layer===resourceLayerKey){
+      resourceMarkers.forEach(marker=>visible ? map.addLayer(marker) : map.removeLayer(marker));
+    }
+  });
+});
+</script>
+</body>
+</html>
